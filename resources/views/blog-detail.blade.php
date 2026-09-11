@@ -57,13 +57,6 @@
         <!-- Meta Information -->
         <div class="flex items-center justify-center gap-4 text-xs sm:text-sm text-purple-700/70 dark:text-purple-400/80 pt-2 flex-wrap">
             <span>{{ $publishedDate }}</span>
-            <span>&bull;</span>
-            <span class="flex items-center gap-1">
-                <svg class="w-3.5 h-3.5 text-rose-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                </svg>
-                {{ $readTime }} min read
-            </span>
             @php
                 $displayViews = $views ?? ($blog['views_count'] ?? 0);
             @endphp
@@ -112,7 +105,7 @@
         <!-- Article Body Column (8 cols) -->
         <div class="lg:col-span-8 space-y-10">
             <!-- Main Editorial Content -->
-            <div class="prose-content">
+            <div id="blog-article-content" class="prose-content">
                 {!! $blog['content'] ?? '' !!}
             </div>
 
@@ -197,7 +190,7 @@
                         <div class="flex items-center gap-4 flex-wrap">
                             <div class="flex items-center gap-2">
                                 <span class="text-xs font-bold text-purple-700 dark:text-purple-300">Security Check:</span>
-                                <span class="px-3 py-1.5 rounded-xl bg-purple-100 dark:bg-purple-900/60 font-mono text-sm font-bold text-purple-900 dark:text-purple-200">
+                                <span id="comment-captcha-text" class="px-3 py-1.5 rounded-xl bg-purple-100 dark:bg-purple-900/60 font-mono text-sm font-bold text-purple-900 dark:text-purple-200">
                                     {{ $captchaQuestion }} = ?
                                 </span>
                             </div>
@@ -237,13 +230,28 @@
         </div>
 
         <!-- Sidebar Column (3 cols) -->
-        <aside class="lg:col-span-3 space-y-8">
-            <!-- Related Stories -->
-            @if(!empty($relatedBlogs) && count($relatedBlogs) > 0)
-                <div class="rounded-3xl bg-white dark:bg-[#180E2B] p-6 border border-purple-100 dark:border-purple-900/60 shadow-xs space-y-4">
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-purple-600 dark:text-purple-400 border-b border-purple-50 dark:border-purple-900/40 pb-2">
-                        Related Stories
-                    </h4>
+        <aside class="lg:col-span-3">
+            <div class="lg:sticky lg:top-28 space-y-6">
+                <!-- On This Page Table of Contents Widget -->
+                <div id="table-of-contents-wrapper" class="rounded-3xl bg-white dark:bg-[#180E2B] p-5 border border-purple-100 dark:border-purple-900/60 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between border-b border-purple-50 dark:border-purple-900/40 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-600 ring-4 ring-purple-500/20"></span>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">On This Page</h4>
+                        </div>
+                        <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">Quick Nav</span>
+                    </div>
+                    <ul id="table-of-contents-list" class="space-y-1 max-h-[300px] overflow-y-auto scroll-smooth pr-1 text-sm border-l-2 border-purple-100 dark:border-purple-900/50 pl-2">
+                        <!-- Dynamically generated TOC -->
+                    </ul>
+                </div>
+
+                <!-- Related Stories -->
+                @if(!empty($relatedBlogs) && count($relatedBlogs) > 0)
+                    <div class="rounded-3xl bg-white dark:bg-[#180E2B] p-6 border border-purple-100 dark:border-purple-900/60 shadow-xs space-y-4">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-purple-600 dark:text-purple-400 border-b border-purple-50 dark:border-purple-900/40 pb-2">
+                            Related Stories
+                        </h4>
                     <div class="space-y-4">
                         @foreach(collect($relatedBlogs)->take(4) as $related)
                             @php
@@ -269,6 +277,7 @@
 
             <!-- Sidebar Ad Placement -->
             <x-ad-banner placement="sidebar" />
+            </div>
         </aside>
     </div>
 </article>
@@ -366,10 +375,20 @@
                             commentsCount.textContent = current + 1;
                         }
 
-                        // Reset form fields except blog_id & csrf
-                        form.querySelector('[name="description"]').value = '';
-                        form.querySelector('[name="captcha"]').value = '';
+                        // Reset all input fields automatically
+                        form.reset();
+
+                        // Auto change captcha
+                        if (data.new_captcha) {
+                            const captchaEl = document.getElementById('comment-captcha-text');
+                            if (captchaEl) captchaEl.textContent = data.new_captcha + ' = ?';
+                        }
                     } else {
+                        // Auto change captcha on error too
+                        if (data.new_captcha) {
+                            const captchaEl = document.getElementById('comment-captcha-text');
+                            if (captchaEl) captchaEl.textContent = data.new_captcha + ' = ?';
+                        }
                         // Show validation or submission error
                         alertBox.className = 'p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs font-semibold';
                         const errMsg = data.message || (data.errors ? Object.values(data.errors).flat()[0] : 'Failed to submit reflection.');

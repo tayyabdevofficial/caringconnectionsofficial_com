@@ -45,13 +45,6 @@
                     <div class="space-y-3 max-w-2xl">
                         <div class="flex items-center gap-3 text-xs sm:text-sm text-purple-200 font-medium">
                             <span>{{ $mainDate }}</span>
-                            <span>&bull;</span>
-                            <span class="flex items-center gap-1">
-                                <svg class="w-3.5 h-3.5 text-rose-300" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                                </svg>
-                                {{ $mainReadTime }} min read
-                            </span>
                             @if($mainViews > 0)
                                 <span>&bull;</span>
                                 <span class="flex items-center gap-1">
@@ -67,12 +60,6 @@
                         <h2 class="text-2xl sm:text-4xl font-serif font-bold text-white leading-tight tracking-tight group-hover:text-purple-200 transition-colors drop-shadow-md">
                             {{ $mainTitle }}
                         </h2>
-
-                        @if(!empty($mainHero['short_description']))
-                            <p class="text-sm sm:text-base text-purple-100/90 line-clamp-2 leading-relaxed hidden sm:block">
-                                {{ $mainHero['short_description'] }}
-                            </p>
-                        @endif
 
                         <div class="pt-2">
                             <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-purple-600 to-rose-500 hover:from-purple-500 hover:to-rose-400 text-white font-bold text-xs sm:text-sm shadow-xl transition-all">

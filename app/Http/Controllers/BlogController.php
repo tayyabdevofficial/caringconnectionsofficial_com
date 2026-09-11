@@ -73,24 +73,31 @@ class BlogController extends Controller
         ]);
 
         $expectedCaptcha = session('comment_captcha');
+        
+        // Always generate next fresh captcha
+        $nextNum1 = rand(3, 9);
+        $nextNum2 = rand(1, 8);
+        session(['comment_captcha' => $nextNum1 + $nextNum2]);
+        $newCaptcha = "{$nextNum1} + {$nextNum2}";
+
         if ((int)$request->input('captcha') !== (int)$expectedCaptcha) {
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Incorrect security captcha answer. Please calculate the math problem correctly.',
+                    'new_captcha' => $newCaptcha,
                 ], 422);
             }
             return back()->withInput()->with('error', 'Incorrect security captcha answer.');
         }
-
-        session()->forget('comment_captcha');
 
         $res = $this->client->submitComment($request->only(['blog_id', 'full_name', 'email', 'description']));
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => $res['success'] ?? false,
-                'message' => $res['data']['message'] ?? ($res['success'] ? 'Your comment has been submitted successfully!' : 'Failed to submit comment.'),
+                'message' => $res['data']['message'] ?? ($res['success'] ? 'Your reflection has been submitted successfully!' : 'Failed to submit comment.'),
+                'new_captcha' => $newCaptcha,
                 'comment' => [
                     'full_name' => $request->input('full_name'),
                     'description' => $request->input('description'),
@@ -100,7 +107,7 @@ class BlogController extends Controller
         }
 
         if ($res['success'] ?? false) {
-            return back()->with('success', 'Your comment has been submitted successfully!');
+            return back()->with('success', 'Your reflection has been submitted successfully!');
         }
 
         return back()->withInput()->with('error', $res['data']['message'] ?? 'Failed to submit comment. Please try again.');

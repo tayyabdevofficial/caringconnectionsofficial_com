@@ -177,3 +177,14 @@
 .dark .prose-content a {
     color: #a78bfa;
 }
+
+#table-of-contents-list::-webkit-scrollbar {
+    width: 3px;
+}
+#table-of-contents-list::-webkit-scrollbar-thumb {
+    background: rgba(167, 139, 250, 0.4);
+    border-radius: 4px;
+}
+#table-of-contents-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.7);
+}
