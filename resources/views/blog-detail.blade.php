@@ -69,7 +69,7 @@
 
     <!-- Featured Image -->
     <div class="max-w-5xl mx-auto mb-12 rounded-3xl overflow-hidden shadow-2xl shimmer-loading bg-[#1C1230] aspect-[16/9] border border-purple-100 dark:border-purple-900/60">
-        <img src="{{ $imageUrl }}" alt="{{ $title }}" class="w-full h-full object-cover">
+        <img src="{{ $imageUrl }}" alt="{{ $title }}" fetchpriority="high" decoding="async" width="1150" height="647" class="w-full h-full object-cover">
     </div>
 
     <!-- Main Content Layout (Article + Sidebar) -->

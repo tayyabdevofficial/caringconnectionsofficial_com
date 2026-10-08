@@ -188,3 +188,13 @@
 #table-of-contents-list::-webkit-scrollbar-thumb:hover {
     background: rgba(139, 92, 246, 0.7);
 }
+
+/* Google AdSense Responsive Slot Safety */
+ins.adsbygoogle {
+    display: block !important;
+    width: 100% !important;
+    min-width: 250px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+

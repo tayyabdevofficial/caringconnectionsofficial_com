@@ -10,7 +10,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             <!-- Main Featured Story (8 cols on lg) -->
             @php
-                $mainImage = blogger_media_url($mainHero['image_1150x900'] ?? $mainHero['image_850x500'] ?? $mainHero['image_url'] ?? null);
+                $mainImage1150 = !empty($mainHero['image_1150x900']) ? blogger_media_url($mainHero['image_1150x900']) : null;
+                $mainImage850  = !empty($mainHero['image_850x500']) ? blogger_media_url($mainHero['image_850x500']) : null;
+                $mainImage500  = !empty($mainHero['image_500x500']) ? blogger_media_url($mainHero['image_500x500']) : (!empty($mainHero['image_400x300']) ? blogger_media_url($mainHero['image_400x300']) : null);
+                $mainImageDefault = $mainImage850 ?: ($mainImage1150 ?: blogger_media_url($mainHero['image_url'] ?? null));
                 $mainTitle = $mainHero['title'] ?? '';
                 $mainSlug = $mainHero['slug'] ?? '#';
                 $mainDetailUrl = route('blog.show', $mainSlug);
@@ -21,9 +24,24 @@
                 $mainReadTime = blogger_reading_time($mainHero['content'] ?? $mainHero['short_description'] ?? '');
             @endphp
             <div onclick="window.location.href='{{ $mainDetailUrl }}'" 
+                 style="aspect-ratio: 16/10;"
                  class="lg:col-span-8 relative rounded-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] shadow-2xl group cursor-pointer shimmer-loading bg-[#0E071A] border border-purple-200/30 dark:border-purple-900/40">
 
-                <img src="{{ $mainImage }}" alt="{{ $mainTitle }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                <picture class="absolute inset-0 w-full h-full">
+                    @if($mainImage500)
+                        <source media="(max-width: 640px)" srcset="{{ $mainImage500 }}">
+                    @endif
+                    @if($mainImage850)
+                        <source media="(max-width: 1024px)" srcset="{{ $mainImage850 }}">
+                    @endif
+                    <img src="{{ $mainImageDefault }}" 
+                         alt="{{ $mainTitle }}" 
+                         fetchpriority="high"
+                         decoding="async"
+                         width="850"
+                         height="500"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                </picture>
                 
                 <!-- Full Dark Gradient Scrim to ensure complete legibility against baked-in image texts -->
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0E071A] via-[#0E071A]/75 to-[#0E071A]/40"></div>
@@ -89,7 +107,7 @@
 
                     <div onclick="window.location.href='{{ $subDetailUrl }}'"
                          class="relative flex-1 rounded-3xl overflow-hidden shadow-lg group aspect-[16/9] lg:aspect-auto cursor-pointer shimmer-loading bg-[#0E071A] border border-purple-200/30 dark:border-purple-900/40 min-h-[175px]">
-                        <img src="{{ $subImage }}" alt="{{ $subTitle }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ $subImage }}" alt="{{ $subTitle }}" loading="lazy" decoding="async" width="400" height="250" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0E071A] via-[#0E071A]/75 to-[#0E071A]/35"></div>
                         
                         <div class="absolute inset-0 p-6 flex flex-col justify-end z-10">

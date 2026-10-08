@@ -6,7 +6,10 @@
             <!-- Brand & Mission Column (5 cols on lg) -->
             <div class="lg:col-span-5 space-y-5">
                 <a href="{{ route('home') }}" class="inline-block group">
-                    <img src="{{ asset('logo.png') }}" alt="{{ config('site.name') }}" class="h-10 sm:h-12 w-auto object-contain rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
+                    <picture>
+                        <source srcset="{{ asset('logo.webp') }}" type="image/webp">
+                        <img src="{{ asset('logo.png') }}" alt="{{ config('site.name') }}" width="160" height="48" loading="lazy" decoding="async" class="h-10 sm:h-12 w-auto object-contain rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
+                    </picture>
                 </a>
                 
                 <p class="text-sm text-purple-300/80 leading-relaxed max-w-sm">

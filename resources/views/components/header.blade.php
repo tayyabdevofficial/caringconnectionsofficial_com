@@ -9,9 +9,15 @@
                 <div class="flex items-center gap-3 shrink-0">
                     <a href="{{ route('home') }}" class="flex items-center gap-2 group">
                         <!-- Compact brand mark on mobile -->
-                        <img src="{{ asset('logo-sm.png') }}" alt="{{ config('site.name') }}" class="h-9 w-9 object-contain rounded-xl block sm:hidden group-hover:scale-105 transition-transform duration-300">
+                        <picture class="block sm:hidden shrink-0">
+                            <source srcset="{{ asset('logo-sm.webp') }}" type="image/webp">
+                            <img src="{{ asset('logo-sm.png') }}" alt="{{ config('site.name') }}" width="36" height="36" fetchpriority="high" class="h-9 w-9 object-contain rounded-xl group-hover:scale-105 transition-transform duration-300">
+                        </picture>
                         <!-- Full horizontal brand logo for sm and above -->
-                        <img src="{{ asset('logo.png') }}" alt="{{ config('site.name') }}" class="h-8 sm:h-10 w-auto object-contain hidden sm:block group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-xs">
+                        <picture class="hidden sm:block shrink-0">
+                            <source srcset="{{ asset('logo.webp') }}" type="image/webp">
+                            <img src="{{ asset('logo.png') }}" alt="{{ config('site.name') }}" width="160" height="40" fetchpriority="high" class="h-8 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-xs">
+                        </picture>
                     </a>
                 </div>
 
