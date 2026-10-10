@@ -97,16 +97,16 @@
         </div>
 
         <!-- Copyright & Bottom Bar -->
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-purple-400/80">
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-purple-300">
             <p>&copy; {{ date('Y') }} {{ config('site.name') }}. All rights reserved.</p>
             <div class="flex items-center gap-4">
-                <a href="{{ route('pages.privacy') }}" class="hover:text-white transition-colors">Privacy</a>
-                <span>&bull;</span>
-                <a href="{{ route('pages.terms') }}" class="hover:text-white transition-colors">Terms</a>
-                <span>&bull;</span>
-                <a href="{{ route('pages.cookies') }}" class="hover:text-white transition-colors">Cookies</a>
-                <span>&bull;</span>
-                <a href="{{ route('sitemap') }}" class="hover:text-white transition-colors">Sitemap</a>
+                <a href="{{ route('pages.privacy') }}" class="text-purple-300 hover:text-white transition-colors">Privacy</a>
+                <span class="text-purple-500">&bull;</span>
+                <a href="{{ route('pages.terms') }}" class="text-purple-300 hover:text-white transition-colors">Terms</a>
+                <span class="text-purple-500">&bull;</span>
+                <a href="{{ route('pages.cookies') }}" class="text-purple-300 hover:text-white transition-colors">Cookies</a>
+                <span class="text-purple-500">&bull;</span>
+                <a href="{{ route('sitemap') }}" class="text-purple-300 hover:text-white transition-colors">Sitemap</a>
             </div>
         </div>
     </div>
