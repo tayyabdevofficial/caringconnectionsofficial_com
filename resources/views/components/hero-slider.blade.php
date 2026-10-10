@@ -10,10 +10,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             <!-- Main Featured Story (8 cols on lg) -->
             @php
-                $mainImage1150 = !empty($mainHero['image_1150x900']) ? blogger_media_url($mainHero['image_1150x900']) : null;
-                $mainImage850  = !empty($mainHero['image_850x500']) ? blogger_media_url($mainHero['image_850x500']) : null;
-                $mainImage500  = !empty($mainHero['image_500x500']) ? blogger_media_url($mainHero['image_500x500']) : (!empty($mainHero['image_400x300']) ? blogger_media_url($mainHero['image_400x300']) : null);
-                $mainImageDefault = $mainImage850 ?: ($mainImage1150 ?: blogger_media_url($mainHero['image_url'] ?? null));
+                $rawHeroImage = $mainHero['image_1150x900'] ?? $mainHero['image_850x500'] ?? $mainHero['image_500x500'] ?? $mainHero['image_400x300'] ?? $mainHero['image_url'] ?? null;
+                $mainImage1150 = blogger_media_url(!empty($mainHero['image_1150x900']) ? $mainHero['image_1150x900'] : $rawHeroImage, '/images/placeholder.svg', 1150);
+                $mainImage850  = blogger_media_url(!empty($mainHero['image_850x500']) ? $mainHero['image_850x500'] : $rawHeroImage, '/images/placeholder.svg', 850);
+                $mainImage500  = blogger_media_url(!empty($mainHero['image_500x500']) ? $mainHero['image_500x500'] : (!empty($mainHero['image_400x300']) ? $mainHero['image_400x300'] : $rawHeroImage), '/images/placeholder.svg', 500);
                 $mainTitle = $mainHero['title'] ?? '';
                 $mainSlug = $mainHero['slug'] ?? '#';
                 $mainDetailUrl = route('blog.show', $mainSlug);
@@ -28,13 +28,9 @@
                  class="lg:col-span-8 relative rounded-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] shadow-2xl group cursor-pointer shimmer-loading bg-[#0E071A] border border-purple-200/30 dark:border-purple-900/40">
 
                 <picture class="absolute inset-0 w-full h-full">
-                    @if($mainImage500)
-                        <source media="(max-width: 640px)" srcset="{{ $mainImage500 }}">
-                    @endif
-                    @if($mainImage850)
-                        <source media="(max-width: 1024px)" srcset="{{ $mainImage850 }}">
-                    @endif
-                    <img src="{{ $mainImageDefault }}" 
+                    <source media="(max-width: 640px)" srcset="{{ $mainImage500 }}">
+                    <source media="(max-width: 1024px)" srcset="{{ $mainImage850 }}">
+                    <img src="{{ $mainImage500 }}" 
                          alt="{{ $mainTitle }}" 
                          fetchpriority="high"
                          decoding="async"
@@ -95,7 +91,7 @@
             <div class="lg:col-span-4 flex flex-col gap-6 justify-between">
                 @foreach($secondaryHeroes as $subHero)
                     @php
-                        $subImage = blogger_media_url($subHero['image_500x500'] ?? $subHero['image_400x300'] ?? $subHero['image_url'] ?? null);
+                        $subImage = blogger_media_url($subHero['image_500x500'] ?? $subHero['image_400x300'] ?? $subHero['image_url'] ?? null, '/images/placeholder.svg', 500);
                         $subTitle = $subHero['title'] ?? '';
                         $subSlug = $subHero['slug'] ?? '#';
                         $subDetailUrl = route('blog.show', $subSlug);
@@ -107,7 +103,7 @@
 
                     <div onclick="window.location.href='{{ $subDetailUrl }}'"
                          class="relative flex-1 rounded-3xl overflow-hidden shadow-lg group aspect-[16/9] lg:aspect-auto cursor-pointer shimmer-loading bg-[#0E071A] border border-purple-200/30 dark:border-purple-900/40 min-h-[175px]">
-                        <img src="{{ $subImage }}" alt="{{ $subTitle }}" loading="lazy" decoding="async" width="400" height="250" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ $subImage }}" alt="{{ $subTitle }}" decoding="async" width="400" height="250" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0E071A] via-[#0E071A]/75 to-[#0E071A]/35"></div>
                         
                         <div class="absolute inset-0 p-6 flex flex-col justify-end z-10">
