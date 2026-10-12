@@ -2,18 +2,7 @@
 window.toggleTheme = function () {
     const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('cc_theme', isDark ? 'dark' : 'light');
-    updateThemeIcons();
 };
-
-function updateThemeIcons() {
-    const isDark = document.documentElement.classList.contains('dark');
-    document.querySelectorAll('.theme-sun-icon').forEach(el => {
-        el.style.display = isDark ? 'block' : 'none';
-    });
-    document.querySelectorAll('.theme-moon-icon').forEach(el => {
-        el.style.display = isDark ? 'none' : 'block';
-    });
-}
 
 // Auto change according to system if user did not manually specify
 try {
@@ -24,7 +13,6 @@ try {
             } else {
                 document.documentElement.classList.remove('dark');
             }
-            updateThemeIcons();
         }
     });
 } catch (e) {}
@@ -65,19 +53,15 @@ function initReadingProgress() {
     if (!progressBar) return;
 
     let ticking = false;
-    let maxScroll = 0;
-
-    function recalculateMaxScroll() {
-        maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    }
-    recalculateMaxScroll();
-    window.addEventListener('resize', recalculateMaxScroll, { passive: true });
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                const scrolled = (window.scrollY / (maxScroll || 1)) * 100;
-                progressBar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+                const maxScroll = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+                if (maxScroll > 0) {
+                    const scrolled = (window.scrollY / maxScroll) * 100;
+                    progressBar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+                }
                 ticking = false;
             });
             ticking = true;
@@ -221,11 +205,10 @@ function initTableOfContents() {
         }
     }, { passive: true });
 
-    updateActiveOnScroll();
+    window.requestAnimationFrame(updateActiveOnScroll);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateThemeIcons();
     initReadingProgress();
     initTableOfContents();
 

@@ -34,15 +34,15 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Main Featured Articles (8 cols) -->
-                <div class="lg:col-span-8">
-                    @if(!empty($featuredBlogs) && count($featuredBlogs) > 0)
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            @foreach(array_slice($featuredBlogs, 0, 4) as $featured)
-                                <x-blog-card :blog="$featured" />
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
+                @if(!empty($featuredBlogs) && count($featuredBlogs) > 0)
+                    <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        @foreach(array_slice($featuredBlogs, 0, 4) as $featured)
+                            <x-blog-card :blog="$featured" />
+                        @endforeach
+                    </div>
+                @else
+                    <div class="lg:col-span-8"></div>
+                @endif
 
                 <!-- Uplifting Reads & Most Popular (4 cols) -->
                 <div class="lg:col-span-4 space-y-6">

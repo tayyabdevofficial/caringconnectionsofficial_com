@@ -14,7 +14,7 @@
 
 <article class="group relative rounded-3xl bg-white dark:bg-[#180E2B] border border-purple-100/90 dark:border-purple-900/50 hover:border-purple-300 dark:hover:border-purple-600/60 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden">
     <!-- Image Header -->
-    <a href="{{ $url }}" class="relative aspect-[16/10] overflow-hidden bg-purple-50 dark:bg-[#120822] block">
+    <a href="{{ $url }}" aria-label="{{ $title }}" class="relative aspect-[16/10] overflow-hidden bg-purple-50 dark:bg-[#120822] block">
         <img src="{{ $image }}" 
              alt="{{ $title }}" 
              loading="lazy" 
@@ -44,7 +44,7 @@
             </div>
 
             <h3 class="text-lg font-serif font-bold text-slate-900 dark:text-white leading-snug group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors line-clamp-2">
-                <a href="{{ $url }}">
+                <a href="{{ $url }}" aria-label="{{ $title }}">
                     {{ $title }}
                 </a>
             </h3>
@@ -65,9 +65,9 @@
                 </svg>
                 <span>{{ number_format((int)$viewsCount) }} {{ Str::plural('view', (int)$viewsCount) }}</span>
             </div>
-            <a href="{{ $url }}" class="font-semibold text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 transition-colors inline-flex items-center gap-1">
-                <span>Read</span>
-                <span class="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+            <a href="{{ $url }}" aria-label="{{ $title }}" class="font-semibold text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 transition-colors inline-flex items-center gap-1">
+                <span aria-hidden="true">Read</span>
+                <span aria-hidden="true" class="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
             </a>
         </div>
     </div>

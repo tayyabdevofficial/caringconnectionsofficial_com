@@ -127,7 +127,7 @@
         <!-- Drawer Header -->
         <div class="flex items-center justify-between p-5 border-b border-purple-100 dark:border-purple-950">
             <a href="{{ route('home') }}" class="flex items-center" onclick="closeMobileNav()">
-                <img src="{{ asset('logo.png') }}" alt="{{ config('site.name') }}" class="h-8 w-auto object-contain">
+                <img src="{{ asset('logo.png') }}" alt="{{ config('site.name') }}" width="160" height="40" loading="lazy" decoding="async" class="h-8 w-auto object-contain">
             </a>
             <button type="button" 
                     onclick="closeMobileNav()" 

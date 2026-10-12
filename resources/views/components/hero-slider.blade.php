@@ -26,15 +26,16 @@
                  style="aspect-ratio: 16/10;"
                  class="lg:col-span-8 relative rounded-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] shadow-2xl group cursor-pointer bg-[#0E071A] border border-purple-200/30 dark:border-purple-900/40">
 
-                <picture class="absolute inset-0 w-full h-full">
-                    <source media="(max-width: 640px)" srcset="{{ $mainImage500 }}">
-                    <img src="{{ $mainImage850 }}" 
-                         alt="{{ $mainTitle }}" 
-                         fetchpriority="high"
-                         width="850"
-                         height="500"
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
-                </picture>
+                <img src="{{ $mainImage850 }}" 
+                     srcset="{{ $mainImage500 }} 500w, {{ $mainImage850 }} 850w"
+                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 850px"
+                     alt="{{ $mainTitle }}" 
+                     fetchpriority="high"
+                     loading="eager"
+                     decoding="async"
+                     width="850"
+                     height="500"
+                     class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
                 
                 <!-- Full Dark Gradient Scrim to ensure complete legibility against baked-in image texts -->
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0E071A] via-[#0E071A]/75 to-[#0E071A]/40"></div>
