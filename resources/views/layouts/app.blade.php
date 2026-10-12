@@ -362,18 +362,35 @@
     </button>
 
     <script>
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('back-to-top');
-            if (btn) {
-                if (window.scrollY > 400) {
-                    btn.classList.remove('opacity-0', 'pointer-events-none');
-                    btn.classList.add('opacity-100');
-                } else {
-                    btn.classList.remove('opacity-100');
-                    btn.classList.add('opacity-0', 'pointer-events-none');
+        (function() {
+            var btn = null;
+            var isVisible = false;
+            var ticking = false;
+
+            function updateBackToTop() {
+                if (!btn) btn = document.getElementById('back-to-top');
+                if (!btn) return;
+                var shouldBeVisible = window.scrollY > 400;
+                if (shouldBeVisible !== isVisible) {
+                    isVisible = shouldBeVisible;
+                    if (isVisible) {
+                        btn.classList.remove('opacity-0', 'pointer-events-none');
+                        btn.classList.add('opacity-100');
+                    } else {
+                        btn.classList.remove('opacity-100');
+                        btn.classList.add('opacity-0', 'pointer-events-none');
+                    }
                 }
+                ticking = false;
             }
-        });
+
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateBackToTop);
+                    ticking = true;
+                }
+            }, { passive: true });
+        })();
     </script>
     @yield('scripts')
 </body>

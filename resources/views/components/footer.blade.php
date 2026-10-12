@@ -29,9 +29,9 @@
 
             <!-- Explore Categories Column (4 cols on lg) -->
             <div class="lg:col-span-4 space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-widest text-white border-b border-purple-900/60 pb-2">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-white border-b border-purple-900/60 pb-2">
                     Care Categories
-                </h4>
+                </h3>
                 <ul class="space-y-2 text-sm">
                     @foreach(collect($categories)->take(6) as $cat)
                         <li>
@@ -52,9 +52,9 @@
 
             <!-- Company & Legal Column (3 cols on lg) -->
             <div class="lg:col-span-3 space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-widest text-white border-b border-purple-900/60 pb-2">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-white border-b border-purple-900/60 pb-2">
                     Community &amp; Legal
-                </h4>
+                </h3>
                 <ul class="space-y-2.5 text-sm">
                     <li>
                         <a href="{{ route('pages.about') }}" class="text-purple-300/80 hover:text-white transition-colors flex items-center gap-2 group">

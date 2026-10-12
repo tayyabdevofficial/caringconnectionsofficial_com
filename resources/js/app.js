@@ -64,12 +64,23 @@ function initReadingProgress() {
     const progressBar = document.getElementById('reading-progress-bar');
     if (!progressBar) return;
 
+    let ticking = false;
+    let maxScroll = 0;
+
+    function recalculateMaxScroll() {
+        maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    }
+    recalculateMaxScroll();
+    window.addEventListener('resize', recalculateMaxScroll, { passive: true });
+
     window.addEventListener('scroll', () => {
-        const winScroll = document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        if (height > 0) {
-            const scrolled = (winScroll / height) * 100;
-            progressBar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = (window.scrollY / (maxScroll || 1)) * 100;
+                progressBar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+                ticking = false;
+            });
+            ticking = true;
         }
     }, { passive: true });
 }
@@ -178,7 +189,7 @@ function initTableOfContents() {
         });
 
         if (activeLink) {
-            scrollTocToActive(activeLink);
+            window.requestAnimationFrame(() => scrollTocToActive(activeLink));
         }
     }
 

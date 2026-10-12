@@ -68,9 +68,9 @@
                             @endif
                         </div>
 
-                        <h2 class="text-2xl sm:text-4xl font-serif font-bold text-white leading-tight tracking-tight group-hover:text-purple-200 transition-colors drop-shadow-md">
+                        <h1 class="text-2xl sm:text-4xl font-serif font-bold text-white leading-tight tracking-tight group-hover:text-purple-200 transition-colors drop-shadow-md">
                             {{ $mainTitle }}
-                        </h2>
+                        </h1>
 
                         <div class="pt-2">
                             <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-purple-600 to-rose-500 hover:from-purple-500 hover:to-rose-400 text-white font-bold text-xs sm:text-sm shadow-xl transition-all">
@@ -109,9 +109,9 @@
                                     {{ $subCat }}
                                 </span>
                             @endif
-                            <h3 class="text-base sm:text-lg font-serif font-bold text-white leading-snug line-clamp-2 group-hover:text-purple-200 transition-colors">
+                            <h2 class="text-base sm:text-lg font-serif font-bold text-white leading-snug line-clamp-2 group-hover:text-purple-200 transition-colors">
                                 {{ $subTitle }}
-                            </h3>
+                            </h2>
                             <div class="flex items-center gap-2 text-xs text-purple-200/90 mt-2">
                                 <span>{{ $subDate }}</span>
                                 @if($subViews > 0)

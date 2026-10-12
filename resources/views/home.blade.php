@@ -7,6 +7,8 @@
     <!-- Hero Spotlight Section -->
     @if(!empty($headerSliderBlogs) && count($headerSliderBlogs) > 0)
         <x-hero-slider :blogs="$headerSliderBlogs" />
+    @else
+        <h1 class="sr-only">{{ config('site.name') }} - {{ config('site.tagline') }}</h1>
     @endif
 
     <!-- Top Header Ad Placement (Rendered after Hero Blogs) -->
@@ -61,21 +63,31 @@
                                     $storyTitle = $story['title'] ?? '';
                                     $storyCat = $story['category']['name'] ?? 'Care';
                                     $storyDate = blogger_format_date($story['published_at'] ?? null);
-                                    $storyImg = blogger_media_url($story['image_200x200'] ?? $story['image_url'] ?? null);
+                                    $storyRawImg = $story['image_200x200'] ?? $story['image_url'] ?? null;
+                                    $storyImg100 = blogger_media_url($storyRawImg, '/images/placeholder.svg', 100);
+                                    $storyImg200 = blogger_media_url($storyRawImg, '/images/placeholder.svg', 200);
                                 @endphp
                                 <a href="{{ $storyUrl }}" class="flex items-center gap-4 group p-2 rounded-2xl hover:bg-purple-50/70 dark:hover:bg-purple-950/40 transition-colors">
                                     <span class="text-2xl font-serif font-bold text-purple-300 dark:text-purple-700/80 group-hover:text-purple-600 transition-colors shrink-0 w-6 text-center">
                                         {{ $index + 1 }}
                                     </span>
                                     <div class="w-14 h-14 rounded-xl overflow-hidden bg-purple-100 dark:bg-purple-900/40 shrink-0">
-                                        <img src="{{ $storyImg }}" alt="{{ $storyTitle }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                        <img src="{{ $storyImg100 }}" 
+                                             srcset="{{ $storyImg100 }} 100w, {{ $storyImg200 }} 200w"
+                                             sizes="(max-width: 640px) 98px, 56px"
+                                             alt="{{ $storyTitle }}" 
+                                             width="56" 
+                                             height="56" 
+                                             loading="lazy" 
+                                             decoding="async" 
+                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 block">{{ $storyCat }}</span>
                                         <h4 class="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors line-clamp-2 leading-snug">
                                             {{ $storyTitle }}
                                         </h4>
-                                        <span class="text-[10px] text-slate-400 mt-0.5 block">{{ $storyDate }}</span>
+                                        <span class="text-[10px] text-slate-600 dark:text-slate-400 mt-0.5 block">{{ $storyDate }}</span>
                                     </div>
                                 </a>
                             @endforeach

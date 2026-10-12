@@ -258,11 +258,21 @@
                                 $relSlug = $related['slug'] ?? '#';
                                 $relUrl = route('blog.show', $relSlug);
                                 $relTitle = $related['title'] ?? '';
-                                $relImg = blogger_media_url($related['image_200x200'] ?? $related['image_url'] ?? null);
+                                $relRawImg = $related['image_200x200'] ?? $related['image_url'] ?? null;
+                                $relImg100 = blogger_media_url($relRawImg, '/images/placeholder.svg', 100);
+                                $relImg200 = blogger_media_url($relRawImg, '/images/placeholder.svg', 200);
                             @endphp
                             <a href="{{ $relUrl }}" class="flex items-center gap-3 group">
                                 <div class="w-14 h-14 rounded-xl overflow-hidden bg-purple-50 dark:bg-purple-900/40 shrink-0">
-                                    <img src="{{ $relImg }}" alt="{{ $relTitle }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                    <img src="{{ $relImg100 }}" 
+                                         srcset="{{ $relImg100 }} 100w, {{ $relImg200 }} 200w"
+                                         sizes="(max-width: 640px) 98px, 56px"
+                                         alt="{{ $relTitle }}" 
+                                         width="56" 
+                                         height="56" 
+                                         loading="lazy" 
+                                         decoding="async" 
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <h5 class="text-xs font-serif font-semibold text-slate-800 dark:text-slate-200 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors line-clamp-2 leading-snug">
@@ -291,15 +301,6 @@
             alert('Story link copied to clipboard!');
         }
     }
-
-    // Dynamic Reading Progress Bar
-    window.addEventListener('scroll', () => {
-        const winScroll = document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        const bar = document.getElementById('reading-progress-bar');
-        if (bar) bar.style.width = scrolled + '%';
-    });
 
     // Instant AJAX Comment Submission (No Refresh & Immediate Prepend)
     document.addEventListener('DOMContentLoaded', () => {

@@ -27,7 +27,7 @@ class MediaProxyController extends Controller
         }
 
         $w = (int) $request->query('w', 0);
-        $targetWidth = $w > 0 ? min(1200, max(150, $w)) : 800;
+        $targetWidth = $w > 0 ? min(1200, max(50, $w)) : 800;
         $quality = 65; // High-efficiency WebP compression meeting Google PageSpeed savings threshold
 
         $cacheDir = storage_path('app/media_cache');
