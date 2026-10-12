@@ -12,7 +12,7 @@
             @php
                 $rawHeroImage = $mainHero['image_850x500'] ?? $mainHero['image_1150x900'] ?? $mainHero['image_500x500'] ?? $mainHero['image_400x300'] ?? $mainHero['image_url'] ?? null;
                 $mainImage850  = blogger_media_url(!empty($mainHero['image_850x500']) ? $mainHero['image_850x500'] : $rawHeroImage, '/images/placeholder.svg', 850);
-                $mainImage500  = blogger_media_url(!empty($mainHero['image_500x500']) ? $mainHero['image_500x500'] : (!empty($mainHero['image_400x300']) ? $mainHero['image_400x300'] : $rawHeroImage), '/images/placeholder.svg', 500);
+                $mainImage700  = blogger_media_url($rawHeroImage, '/images/placeholder.svg', 700);
                 $mainTitle = $mainHero['title'] ?? '';
                 $mainSlug = $mainHero['slug'] ?? '#';
                 $mainDetailUrl = route('blog.show', $mainSlug);
@@ -26,13 +26,17 @@
                  style="aspect-ratio: 16/10;"
                  class="lg:col-span-8 relative rounded-3xl overflow-hidden aspect-[16/10] sm:aspect-[16/9] shadow-2xl group cursor-pointer bg-[#0E071A] border border-purple-200/30 dark:border-purple-900/40">
 
-                <img src="{{ $mainImage850 }}" 
-                     alt="{{ $mainTitle }}" 
-                     fetchpriority="high"
-                     loading="eager"
-                     width="850"
-                     height="500"
-                     class="absolute inset-0 w-full h-full object-cover">
+                <picture class="absolute inset-0 w-full h-full block">
+                    <source media="(max-width: 640px)" srcset="{{ $mainImage700 }}">
+                    <img src="{{ $mainImage850 }}" 
+                         alt="{{ $mainTitle }}" 
+                         fetchpriority="high"
+                         loading="eager"
+                         decoding="async"
+                         width="850"
+                         height="500"
+                         class="w-full h-full object-cover">
+                </picture>
                 
                 <!-- Full Dark Gradient Scrim to ensure complete legibility against baked-in image texts -->
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0E071A] via-[#0E071A]/75 to-[#0E071A]/40"></div>
@@ -41,11 +45,11 @@
                     <!-- Top Category & Badges -->
                     <div class="flex items-center gap-2.5 flex-wrap">
                         @if($mainCatSlug)
-                            <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-700 to-rose-600 text-white shadow-md backdrop-blur-md">
+                            <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-700 to-rose-600 text-white shadow-md">
                                 {{ $mainCat }}
                             </span>
                         @endif
-                        <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-white/20 text-purple-100 backdrop-blur-md border border-white/20">
+                        <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-purple-950/80 text-purple-100 border border-purple-500/30">
                             💜 Heartbeat Story
                         </span>
                     </div>
@@ -103,7 +107,7 @@
                         
                         <div class="absolute inset-0 p-6 flex flex-col justify-end z-10">
                             @if($subCatSlug)
-                                <span class="self-start px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-purple-600/90 text-white mb-2 shadow-sm backdrop-blur-md">
+                                <span class="self-start px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-purple-700/90 text-white mb-2 shadow-sm">
                                     {{ $subCat }}
                                 </span>
                             @endif

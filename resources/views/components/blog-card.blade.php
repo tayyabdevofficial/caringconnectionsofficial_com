@@ -25,11 +25,11 @@
         
         <div class="absolute top-3.5 left-3.5">
             @if($categorySlug)
-                <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/90 dark:bg-[#180E2B]/90 text-purple-700 dark:text-purple-300 shadow-sm backdrop-blur-md border border-purple-100 dark:border-purple-800">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/95 dark:bg-[#180E2B]/95 text-purple-700 dark:text-purple-300 shadow-sm border border-purple-100 dark:border-purple-800">
                     {{ $category }}
                 </span>
             @else
-                <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/90 dark:bg-[#180E2B]/90 text-purple-700 dark:text-purple-300 shadow-sm backdrop-blur-md">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/95 dark:bg-[#180E2B]/95 text-purple-700 dark:text-purple-300 shadow-sm">
                     {{ $category }}
                 </span>
             @endif
@@ -56,19 +56,18 @@
             @endif
         </div>
 
-        <!-- Card Footer: Views Count & Read Link (Author Removed) -->
-        <div class="pt-3 border-t border-purple-50 dark:border-purple-950/60 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
+        <!-- Card Footer: Views Count & Read Link (Flattened DOM) -->
+        <footer class="pt-3 border-t border-purple-50 dark:border-purple-950/60 flex items-center justify-between text-xs">
+            <span class="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
                 <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                 </svg>
                 <span>{{ number_format((int)$viewsCount) }} {{ Str::plural('view', (int)$viewsCount) }}</span>
-            </div>
+            </span>
             <a href="{{ $url }}" aria-label="{{ $title }}" class="font-semibold text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 transition-colors inline-flex items-center gap-1">
                 <span aria-hidden="true">Read</span>
                 <span aria-hidden="true" class="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
             </a>
-        </div>
+        </footer>
     </div>
 </article>
