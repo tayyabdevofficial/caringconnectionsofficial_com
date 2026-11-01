@@ -48,4 +48,9 @@ return [
         'instagram' => 'https://instagram.com/caringconnectionsofficial',
         'youtube' => 'https://youtube.com/@caringconnections',
     ],
+    'whatsapp' => [
+        'number' => '+92 309 9700930',
+        'raw_number' => '923099700930',
+        'url' => 'https://wa.me/923099700930',
+    ],
 ];
