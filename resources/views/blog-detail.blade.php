@@ -106,7 +106,7 @@
         <div class="lg:col-span-8 space-y-10">
             <!-- Main Editorial Content -->
             <div id="blog-article-content" class="prose-content">
-                {!! $blog['content'] ?? '' !!}
+                {!! clean_blog_html($blog['content'] ?? '') !!}
             </div>
 
             <!-- In-Article Ad Placement -->
